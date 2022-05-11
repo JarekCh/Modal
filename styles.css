@@ -51,18 +51,17 @@ body {
     color: var(--info);
 }
 
-.modal-title .danger {
+.modal .danger {
     color: var(--danger);
 }
 
-.modal-title .warning{
+.modal .warning{
     color: var(--warning);
 }
 
-.modal-title .success{
+.modal .success{
     color: var(--success);
 }
-
 
 
 .modal-title-icon{
@@ -112,6 +111,7 @@ body {
     background: transparent;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
+    margin: 5px 5px 0;
 }
 
 .modal-close-icon:hover {
