@@ -3,8 +3,9 @@ const showModal = document.querySelector('.show-modal');
 const showModalTwo = document.querySelector('.show-modal-two');
 const showModalThree = document.querySelector('.show-modal-three');
 
+
 function modalBody(body = {}) {
-    return `<div class="modal">           
+    return `<div tabindex="10" class="modal">           
     <p class="modal-title ${body.type || ''}">
       <i class="modal-title-icon" data-feather = "${body.modal_icon || 'info'}"></i>
       ${body.title || 'are you sure'}
@@ -13,8 +14,8 @@ function modalBody(body = {}) {
         ${body.description || 'confirm your choice'}
     </p>
     <div class="modal-buttons">
-        <button class="modal-accept">${body.accept_btn || 'Yes'}</button>
-        <button class="modal-declinie">${body.decline_btn || 'No'}</button>
+        <button class="modal-accept modal-action-btn">${body.accept_btn || 'Yes'}</button>
+        <button class="modal-declinie modal-action-btn">${body.decline_btn || 'No'}</button>
     </div>
     <button class="modal-close-icon">
         <i data-feather="x"></i>
@@ -27,9 +28,44 @@ function createModal(value) {
     modalContainer.className = 'modal-container';
     modalContainer.innerHTML =  modalBody(value);
     document.body.appendChild(modalContainer);
+    
+    
+    const closeIcon = document.querySelector('.modal-close-icon');
+
+    closeIcon.addEventListener('click', () =>{
+        const modal = document.querySelector('.modal-container');
+        modal.remove()
+        document.body.style.overflow = 'auto';
+    });
+    const closeBtns = document.querySelectorAll('.modal-action-btn');
+    closeBtns.forEach((btn) => {
+        btn.addEventListener('click', () =>{
+            const modal = document.querySelector('.modal-container');
+            modal.remove()
+            document.body.style.overflow = 'auto';
+        });
+    });
+
+    const modalActive = document.querySelector(".modal");    
+    modalActive.focus();
+    modalActive.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        const modal = document.querySelector(".modal-container");
+        modal.remove();
+        document.body.style.overflow = "auto";
+      }
+    });
+
+    const modalActiveConatainer = document.querySelector('.modal-container');
+    modalActiveConatainer.addEventListener('click', (e) => {
+        if(e.target.classList.contains('modal-container')) {
+            e.target.remove();
+            document.body.style.overflow = "auto";            
+        };
+    });
 
     feather.replace();
-
+    document.body.style.overflow = 'hidden';
 }
 
 function addToBasket(){
@@ -41,7 +77,6 @@ function addToBasket(){
         accept_btn: 'Accept',
         decline_btn: 'Decline',
     });
-
 };
 
 
